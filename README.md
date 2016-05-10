@@ -1,5 +1,5 @@
 # ask_bulavintsev
 need: python3, nginx  
 to start:  
- cd confs/  
- ./start.sh   
+1) cd confs/  
+2) ./start.sh   
