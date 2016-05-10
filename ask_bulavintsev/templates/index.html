@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title%} ASK! {% endblock %}
+{% block main %}
+<ol class="breadcrumb">
+  {% if flag == 1 %}
+    <li class="active">По дате</li>
+    <li><a href="{% url 'hot'%}">По рейтингу</a></li>
+  {% elif flag == 0 %}
+    <li><a href="{% url 'index'%}">По дате</a></li>
+    <li class="active">По рейтингу</li>
+  {% else %}
+    <li><a href="{% url 'index' %}">По дате</a></li>
+    <li><a href="{% url 'hot' %}">По рейтингу</a></li>
+  {% endif %}
+
+</ol>
+{% for question in questions %}
+<div class="questions-item well">
+                <div class="row">
+                    <div class="questions-item__info col-md-2 col-sm-2 col-xs-4">
+                        <a href="{{question.get_absolute_url}}">
+                            <img class="questions-item__info-img img-rounded" src="{{ question.question_user.profile.avatar.url }}" alt="">
+                        </a>
+                        <div class="questions-item__info-rating">
+                            <p class="questions-item__info-count-votes">
+                                <b>Rating:</b>
+                                <span>{{question.rating}}</span>
+                            </p>
+                            <a url="#" action="True" value="12402" class="questions-item__like questions-item__vote">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </a>
+                            <a url="#" action="False" value="12402" class="questions-item__dislike questions-item__vote">
+                                <span class="glyphicon glyphicon-minus"></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="questions-item__content col-md-10 col-sm-10 col-xs-12">
+                        <a class="questions-item__content-title" href="{{question.get_absolute_url}}">
+                            {{question.title}}
+                        </a>
+                        <p class="questions-item__content-text">
+                            {{question.text}}
+                        </p>
+                        <a class="questions-item__content-answers" href="{{question.get_absolute_url}}">
+                            answers ({{question.answers__count}})
+                        </a>
+                        <span class="questions-item__content-tags">
+                            <b>Tags:</b>
+                        </span>
+                            {% for tag in question.tags.all %}
+                            <a class="questions-item__content-tag btn btn-default btn-xs" href="{{tag.get_absolute_url}}">
+                                {{tag.text}}
+                            </a>
+                            {% endfor %}
+                    </div>
+                </div>
+            </div>
+{% endfor %}
+<nav>
+  <div class="pagination">
+    <span class="step-links">
+        {% if questions.has_previous %}
+            <a href="?page={{ questions.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ questions.number }} of {{ questions.paginator.num_pages }}.
+        </span>
+
+        {% if questions.has_next %}
+            <a href="?page={{ questions.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+</nav>
+
+{% endblock%}
