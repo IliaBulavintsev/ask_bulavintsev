@@ -7,7 +7,7 @@
             <div class="question__info col-md-3 col-sm-3">
                 <a href="#">
                     <img class="question__info-img img-rounded"
-                         src="{% static 'img/Bender.png' %}"
+                         src="{{ question.question_user.profile.avatar.url }}"
                          alt="">
                 </a>
                 <div class="question__info-rating">
@@ -42,9 +42,9 @@
                     <b>Tags:</b>
                 </span>
                 {% for tag in question.tags.all %}
-                            <a class="questions-item__content-tag btn btn-default btn-xs" href="#">
+                            <!--<a class="questions-item__content-tag btn btn-default btn-xs" href="#">-->
                                 {{tag.text}}
-                            </a>
+                            <!--</a>-->
                 {% endfor %}
             </div>
         </div>
@@ -56,7 +56,7 @@
                 <div class="row">
                     <div class="comments-item__info col-md-2 col-sm-2">
                         <a href="#">
-                            <img class="comments-item__info-img img-rounded" src="{% static 'img/prof.jpg' %}" alt="">
+                            <img class="comments-item__info-img img-rounded" src="{{ answer.user.profile.avatar.url }}" alt="">
                         </a>
                         <div class="comments-item__info-rating">
                             <p class="comments-item__info-count-votes">
@@ -91,18 +91,17 @@
                         
     
         
-
+        {% if  request.user.is_authenticated %}
         <div class="answer">
-            <form class="answer__form"
-                  role="form"
-                  name="answer-form">
-                <textarea class="answer__form-input form-control" cols="30" id="id_text" name="text" placeholder="Enter your answer" rows="5" type="textarea">
-</textarea>
+            <form class="answer__form">
+                <textarea class="answer__form-input form-control" cols="30" id="id_text" name="text" placeholder="Enter your answer" rows="5" type="textarea"></textarea>
+                <input type="hidden" name="quest" value={{question.pk}}>
                 <button class="answer__form-submit btn btn-success" type="submit">
                     Answer!
                 </button>
             </form>
         </div>
+        {% endif %}
 </div>
 
 {% endblock %}

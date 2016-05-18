@@ -16,6 +16,12 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from . import views as basic
+from django.conf import settings
+
+#only dev!!!!!!!!!!!!!
+
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     #url(r'^admin/', admin.site.urls),
@@ -25,7 +31,12 @@ urlpatterns = [
     url(r'^question/(?P<id>[0-9]+)/$', basic.question_detail, name='question'),
     url(r'^tag/(?P<id>[0-9]+)/$', basic.tag, name='tag'),
     url(r'^login/$', basic.login, name='login'),
+    url(r'^logout/$', basic.log_out, name='logout'),
     url(r'^register/$', basic.register, name='register'),
     url(r'^ask/$', basic.ask, name='ask'),
+    url(r'^answer/$', basic.answer, name='answer'),
     url(r'^$', basic.index, name='index'),
 ]
+#only dev!
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += staticfiles_urlpatterns()

@@ -45,6 +45,17 @@ class Quetion(models.Model):
     def get_absolute_url(self):
         return '/question/{0}/'.format(self.id)
 
+    def get_tags(self, tags):
+        list_tags = tags.split(",")
+        for tag in list_tags:
+            tg = Tag.objects.filter(text=tag)
+            if tg:
+                self.tags.add(tg)
+            else:
+                tg = Tag(text=tag)
+                tg.save()
+                self.tags.add(tg)
+
 
 class Answer(models.Model):
     user = models.ForeignKey(User)

@@ -197,7 +197,14 @@ textarea.form-control {
 .answer__form-submit {
     margin-top: 10px;
 }
-
+.user_head{
+    margin-top: 15px;
+    margin-right: 2px;
+}
+.button_submit_register{
+    margin-top: 10px;
+    margin-left: 12px;
+}
 
 /*-------------FOOTER-------------*/
 .footer__line {
